@@ -1,5 +1,5 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<Target Name="Usamiru-Build">
-		<Csc NoLogo="true" OutputAssembly="Rabbit.exe" Platform="x64" Sources="Program.cs" TargetType="exe"></Csc>
+		<Csc NoLogo="" OutputAssembly="Rabbit.exe" Platform="x64" Sources="Program.cs;AssemblyInfo.cs" TargetType="exe"></Csc>
 	</Target>
 </Project>
