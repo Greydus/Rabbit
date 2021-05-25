@@ -7,13 +7,13 @@ namespace Rabbit
 {
 	class Program
 	{
-		static void Main(string[] args)
+		static void Main(String[] args)
 		{
 			if (args.Length > 0)
 			{
-				HttpWebRequest _hwreq = WebRequest.CreateHttp(args[0]);
+				Uri _uri = new Uri(args[0]);
+				HttpWebRequest _hwreq = WebRequest.CreateHttp(_uri);
 				_hwreq.UserAgent = "Rabbit/1.3.3.7";
-				if (args.Length == 2) _hwreq.Method = args[1];
 
 				//WebResponse _wres = _hwreq.GetResponse();
 				StringBuilder _headersTxt = new StringBuilder();
