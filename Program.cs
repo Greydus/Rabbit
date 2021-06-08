@@ -24,12 +24,12 @@ namespace Rabbit
 					using (StringWriter _headers = new StringWriter(_headersTxt))
 					{
 						WebHeaderCollection _whc = _wres.Headers;
-						//WriteHeadersToString(_headersTxt, _whc);
-						for (int i = 0; i < _whc.Count; ++i)
+						AsyncWriteHeadersToString(_headers, _whc);
+						/*for (int i = 0; i < _whc.Count; ++i)
 						{
 							_headers.WriteLine(_whc.GetKey(i) + ": " + _whc.Get(i));
 							//Console.WriteLine(_whc.GetKey(i) + ": " + _whc.Get(i));
-						}
+						}*/
 					}
 					using (Stream _wrs = _wres.GetResponseStream())
 					{
@@ -44,15 +44,12 @@ namespace Rabbit
 			}
 		}
 
-		/*static async void WriteHeadersToString(StringBuilder sb, WebHeaderCollection whc)
+		static async void AsyncWriteHeadersToString(StringWriter sw, WebHeaderCollection whc)
 		{
-			using (StringWriter sw = new StringWriter(sb))
+			for (int i = 0; i < whc.Count; ++i)
 			{
-				for (int i = 0; i < whc.Count; ++i)
-				{
-					await sw.WriteLineAsync(whc.GetKey(i) + ": " + whc.Get(i));
-				}
+				await sw.WriteLineAsync(whc.GetKey(i) + ": " + whc.Get(i));
 			}
-		}*/
+		}
 	}
 }
