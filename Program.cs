@@ -7,9 +7,12 @@ namespace Rabbit
 {
 	class Program
 	{
+		//static StringBuilder _headersTxt = new StringBuilder();
+		//static String _bodyTxt = String.Empty;
+
 		static void Main(String[] args)
 		{
-			if (args.Length > 0)
+			try
 			{
 				Uri _uri = new Uri(args[0]);
 				HttpWebRequest _hwreq = WebRequest.CreateHttp(_uri);
@@ -41,6 +44,26 @@ namespace Rabbit
 				}
 				Console.WriteLine(_headersTxt);
 				Console.WriteLine(_bodyTxt);
+			}
+			catch (WebException e)
+			{
+				/*StringBuilder _headersTxt = new StringBuilder();
+				String _bodyTxt = String.Empty;
+				using (StringWriter _headers = new StringWriter(_headersTxt))
+				{
+					WebHeaderCollection _whc = e.Response.Headers;
+					AsyncWriteHeadersToString(_headers, _whc);
+				}
+				using (Stream _wrs = e.Response.GetResponseStream())
+				{
+					using (StreamReader _body = new StreamReader(_wrs))
+					{
+						_bodyTxt = _body.ReadToEnd();
+					}
+				}
+				Console.WriteLine(_headersTxt);
+				Console.WriteLine(_bodyTxt);*/
+				Console.WriteLine(e.Message);
 			}
 		}
 
