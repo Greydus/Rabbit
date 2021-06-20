@@ -30,7 +30,7 @@ namespace Rabbit
 
 					using (var __wres = _wres.GetResponseStream())
 					{
-						using (var __body = new StreamReader(_wres))
+						using (var __body = new StreamReader(__wres))
 						{
 							_body = __body.ReadToEnd();
 						}
@@ -48,7 +48,7 @@ namespace Rabbit
 
 		static async void AsyncWriteHeadersToString(StringWriter sw, WebHeaderCollection whc)
 		{
-			for (int i = 0; i < whc.Count; ++i)
+			for (var i = 0; i < whc.Count; i++)
 			{
 				await sw.WriteLineAsync(whc.GetKey(i) + ": " + whc.Get(i));
 			}
