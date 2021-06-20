@@ -1,7 +1,10 @@
 using System;
 using System.IO;
 using System.Net;
+using System.Reflection;
 using System.Text;
+
+[assembly:AssemblyVersion("1.0.*")]
 
 namespace Rabbit
 {
