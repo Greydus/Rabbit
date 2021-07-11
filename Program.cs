@@ -9,9 +9,9 @@ using System.Text;
 
 namespace Rabbit
 {
-	public class Program
+	class Program
 	{
-		public static void Main(String[] args)
+		static void Main(String[] args)
 		{
 			var _assembly = typeof(Program).Assembly.GetName();
 
