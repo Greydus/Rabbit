@@ -5,7 +5,7 @@ using System.Net;
 using System.Reflection;
 using System.Text;
 
-[assembly:AssemblyVersion("2.2.*")]
+[assembly:AssemblyVersion("2.3.*")]
 
 namespace Rabbit
 {
@@ -41,9 +41,10 @@ namespace Rabbit
 				}
 			}
 
-			Console.WriteLine(String.Join("\n", _headers));
+			Console.Write(String.Join("\n", _headers));
 			Console.WriteLine();
-			Console.WriteLine(_body);
+			Console.WriteLine();
+			Console.Write(_body);
 		}
 	}
 }
