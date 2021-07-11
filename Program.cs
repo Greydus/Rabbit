@@ -1,60 +1,48 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Reflection;
 using System.Text;
 
-[assembly:AssemblyVersion("1.0.*")]
+[assembly:AssemblyVersion("2.0.*")]
 
 namespace Rabbit
 {
-	class Program
+	public class Program
 	{
-		static void Main(String[] args)
+		public static void Main(String[] args)
 		{
-			try
+			var _assembly = typeof(Program).Assembly.GetName();
+
+			var _headers = new List<String>();
+			var _body = String.Empty;
+
+			var _uri = new Uri(args[0]);
+			var _client = WebRequest.CreateHttp(_uri);
+
+			_client.UserAgent = _assembly.Name + "/" + _assembly.Version.ToString(2);
+
+			using (var _response = _client.GetResponse())
 			{
-				var _headers = new StringBuilder();
-				var _body = String.Empty;
+				var __headers = _response.Headers;
 
-				var _uri = new Uri(args[0]);
-				var _wreq = WebRequest.CreateHttp(_uri);
-
-				_wreq.UserAgent = "Rabbit/1.3.3.7";
-
-				using (var _wres = _wreq.GetResponse())
+				for (var i = 0; i < __headers.Count; i++)
 				{
-					using (var __headers = new StringWriter(_headers))
-					{
-						var ___headers = _wres.Headers;
-
-						AsyncWriteHeadersToString(__headers, ___headers);
-					}
-
-					using (var __wres = _wres.GetResponseStream())
-					{
-						using (var __body = new StreamReader(__wres))
-						{
-							_body = __body.ReadToEnd();
-						}
-					}
+					_headers.Add(__headers.GetKey(i) + ": " + __headers.Get(i));
 				}
 
-				Console.WriteLine(_headers);
-				Console.WriteLine(_body);
+				using (var __body = _response.GetResponseStream())
+				{
+					using (var ___body = new StreamReader(__body))
+					{
+						_body = ___body.ReadToEnd();
+					}
+				}
 			}
-			catch (WebException e)
-			{
-				Console.WriteLine(e.Message);
-			}
-		}
 
-		static async void AsyncWriteHeadersToString(StringWriter sw, WebHeaderCollection whc)
-		{
-			for (var i = 0; i < whc.Count; i++)
-			{
-				await sw.WriteLineAsync(whc.GetKey(i) + ": " + whc.Get(i));
-			}
+			Console.WriteLine(String.Join("\n", _headers) + "\n");
+			Console.WriteLine(_body);
 		}
 	}
 }
